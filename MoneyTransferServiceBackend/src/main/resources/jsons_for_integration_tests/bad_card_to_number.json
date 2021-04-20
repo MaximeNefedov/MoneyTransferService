@@ -1,0 +1,10 @@
+{
+  "cardFromNumber": "8888777766665555",
+  "cardToNumber": "111122223f334444",
+  "cardFromCVV": "331",
+  "cardFromValidTill": "11/22",
+  "amount": {
+    "currency": "RUR",
+    "value": 11112200
+  }
+}
