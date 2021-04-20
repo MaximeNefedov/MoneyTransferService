@@ -9,8 +9,7 @@ import ru.netology.money_transfer_service.models.OperationId;
 import ru.netology.money_transfer_service.models.transactions.TransactionData;
 import ru.netology.money_transfer_service.services.MoneyTransferService;
 
-@CrossOrigin(origins = "http://localhost:3000")
-@Validated
+@CrossOrigin
 @RestController
 @RequestMapping
 public class MoneyTransferController {

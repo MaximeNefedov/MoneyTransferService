@@ -1,9 +1,17 @@
 version: "3.8"
 
 services:
-  money_transfer_service_app:
+  money_transfer_service_backend_app:
     build:
       ./
-    image: money_transfer_service_app
+    image: money_transfer_service_app:1.0
     ports:
       - 8080:8080
+    environment:
+      - TZ=Europe/Moscow
+  money_transfer_service_frontend_app:
+    build:
+      ./
+    image: money_transfer_service_frontend_app:1.0
+    ports:
+    -  3000:3000

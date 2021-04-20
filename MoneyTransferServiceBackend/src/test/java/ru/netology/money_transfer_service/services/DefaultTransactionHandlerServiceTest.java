@@ -17,6 +17,9 @@ import ru.netology.money_transfer_service.models.transactions.TransactionDataBui
 import ru.netology.money_transfer_service.repositories.CardsRepository;
 import ru.netology.money_transfer_service.repositories.TransactionsRepository;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
@@ -185,10 +188,16 @@ class DefaultTransactionHandlerServiceTest {
 
         Mockito.when(transactionsRepository.confirmCode(transactionId, code)).thenReturn(true);
 
+        final var base = amountForTransaction.getValue();
+        final var percent = new BigDecimal("0.01");
+        final var percentValue = base.multiply(percent).setScale(2, RoundingMode.HALF_UP);
+        final var valueAfterTax = base.subtract(percentValue);
+
         final var transaction = new Transaction();
         transaction.setCardFromNumber(cardFromNumber);
         transaction.setCardToNumber(cardToNumber);
-        transaction.setValueAfterTax(amountForTransaction);
+        transaction.setValueAfterTax(new Amount(Currencies.RUR, valueAfterTax.toString()));
+        transaction.setAmount(amountForTransaction);
 
         Mockito.when(transactionsRepository.getTransactionById(transactionId)).thenReturn(transaction);
 

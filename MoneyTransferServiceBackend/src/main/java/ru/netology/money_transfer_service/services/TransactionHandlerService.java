@@ -124,14 +124,15 @@ public class TransactionHandlerService {
 
         final var cardFrom = cardsRepository.getCardByCardNumber(cardFromNumber);
         final var cardTo = cardsRepository.getCardByCardNumber(cardToNumber);
-        final var amountForTransaction = currentTransaction.getAmountAfterTax();
+        final var amountWithTax = currentTransaction.getAmountAfterTax();
+        final var amountWithoutTax = currentTransaction.getAmount();
 
-        final var newCashBalance = cardFrom.writeOffMoneyFromTheCard(amountForTransaction);
-        cardTo.topUpCardBalance(amountForTransaction);
+        final var newCashBalance = cardFrom.writeOffMoneyFromTheCard(amountWithoutTax);
+        cardTo.topUpCardBalance(amountWithTax);
         currentTransaction.setCompletedStatus();
 
         Logger.getLogger().log("Транзакция подтвеждена, перевод выполнен!", true);
-        Logger.getLogger().log("Списано: " + amountForTransaction
+        Logger.getLogger().log("Списано: " + amountWithoutTax
                 + ". Ваш текущий баланс: " + newCashBalance
                 + ". Баланс карты получателя: " + cardTo.getAmount(), true);
 
