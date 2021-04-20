@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class DefaultTransactionHandlerServiceTest {
+class TransactionHandlerServiceTest {
     private static String cardFromNumber;
     private static String cardFromValidTill;
     private static String cardFromCVV;

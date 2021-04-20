@@ -40,8 +40,6 @@ public class MessageService {
         return code;
     }
 
-    // написать пояснение
-
     private MessageSession createLockForSession(String transactionId, String phoneNumber) {
         final var session = new MessageSession(new Object(), new Object());
         Map<String, MessageSession> mapTmp = new HashMap<>(); // связка: номер телефона - лок
