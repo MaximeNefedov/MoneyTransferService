@@ -2,7 +2,6 @@ package ru.netology.money_transfer_service.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.netology.money_transfer_service.models.ConfirmationData;
 import ru.netology.money_transfer_service.models.OperationId;

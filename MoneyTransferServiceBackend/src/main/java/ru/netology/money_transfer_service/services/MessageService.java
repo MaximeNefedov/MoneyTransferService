@@ -17,6 +17,7 @@ public class MessageService {
     // По истечение времени ожидания подтверждения файл с кодом удалится из корневой директории
     private final int sessionTime = 500;
     private final Map<String, Map<String, MessageSession>> locks = new ConcurrentHashMap<>();
+    private static final Logger LOGGER = Logger.getLogger();
 
 
     public void sendMessage(Transaction transaction) {
@@ -34,7 +35,7 @@ public class MessageService {
         final var code = messageReader.readMessage(phoneNumber);
         if (code == null || code.isEmpty()) {
             final var message = "Ошибка чтения секретного кода";
-            Logger.getLogger().log(message, true);
+            LOGGER.log(message, true);
             throw new СodeReadingException(message);
         }
         return code;

@@ -6,6 +6,7 @@ import ru.netology.money_transfer_service.models.cards.Amount;
 
 public class TransactionBuilder {
     private final Transaction transaction = new Transaction();
+    private static final Logger LOGGER = Logger.getLogger();
 
     public TransactionBuilder setTransactionId(String transactionId) {
         transaction.setTransactionId(transactionId);
@@ -52,7 +53,7 @@ public class TransactionBuilder {
             return transaction;
         } else {
             final var message = "Ошибка создания транзакции";
-            Logger.getLogger().log(message, true);
+            LOGGER.log(message, true);
             throw new TransactionCreationException(message);
         }
     }

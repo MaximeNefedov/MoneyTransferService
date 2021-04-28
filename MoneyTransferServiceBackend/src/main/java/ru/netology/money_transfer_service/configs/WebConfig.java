@@ -8,11 +8,9 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.netology.money_transfer_service.converters.TransactionDataConverter;
-import ru.netology.money_transfer_service.converters.TransactionDataConverterRaw;
 import ru.netology.money_transfer_service.models.transactions.TransactionData;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
 import java.util.List;
 import java.util.stream.Collectors;
 

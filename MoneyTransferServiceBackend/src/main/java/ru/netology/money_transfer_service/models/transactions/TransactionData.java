@@ -1,6 +1,7 @@
 package ru.netology.money_transfer_service.models.transactions;
 
 import ru.netology.money_transfer_service.models.cards.Amount;
+
 import java.util.Objects;
 
 public class TransactionData {

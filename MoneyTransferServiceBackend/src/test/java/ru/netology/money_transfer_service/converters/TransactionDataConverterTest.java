@@ -3,36 +3,25 @@ package ru.netology.money_transfer_service.converters;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
-import ru.netology.money_transfer_service.exceptions.TransactionCreationException;
 import ru.netology.money_transfer_service.exceptions.converter_exceptions.TransactionDataConverterException;
 import ru.netology.money_transfer_service.models.Currencies;
 import ru.netology.money_transfer_service.models.cards.Amount;
-import ru.netology.money_transfer_service.models.transactions.TransactionData;
 import ru.netology.money_transfer_service.models.transactions.TransactionDataBuilder;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TransactionDataConverterTest {
-    private static final String VALID_JSON_FILENAME = "valid_json.json";
-    private static final String INCORRECT_JSON_FILENAME = "incorrect_json.json";
     private static final String JSONS_FOR_UNIT_TESTS_DIRNAME = "jsons_for_unit_tests";
     private static final String SEPARATOR = File.separator;
-
-    private static String jsonForTest;
-    private static String incorrectJsonForTest;
-
-    @BeforeAll
-    public static void setJsonsForTestFromResources() {
-        jsonForTest = readJson(SEPARATOR + JSONS_FOR_UNIT_TESTS_DIRNAME + SEPARATOR + VALID_JSON_FILENAME);
-        incorrectJsonForTest = readJson(SEPARATOR + JSONS_FOR_UNIT_TESTS_DIRNAME + SEPARATOR + INCORRECT_JSON_FILENAME);
-    }
 
     private static String readJson(String path) {
         final String jsonFromFile;
@@ -51,7 +40,7 @@ class TransactionDataConverterTest {
 
     @Test
     void getTransferData() throws ParseException {
-        System.out.println(jsonForTest);
+        final var jsonForTest = readJson(SEPARATOR + JSONS_FOR_UNIT_TESTS_DIRNAME + SEPARATOR + "valid_json.json");
         final var transferData = TransactionDataConverter.getTransactionData(jsonForTest);
         final var transferDataValid = new TransactionDataBuilder()
                 .setCardFromNumber("8888777766665555")
@@ -65,6 +54,7 @@ class TransactionDataConverterTest {
 
     @Test
     void getTransferDataMethodShouldThrowTransactionDataConverterException() {
+        final var incorrectJsonForTest = readJson(SEPARATOR + JSONS_FOR_UNIT_TESTS_DIRNAME + SEPARATOR + "incorrect_json.json");
         assertThrows(TransactionDataConverterException.class,
                 () -> TransactionDataConverter.getTransactionData(incorrectJsonForTest));
     }

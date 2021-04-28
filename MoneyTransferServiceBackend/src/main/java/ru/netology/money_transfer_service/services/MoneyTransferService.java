@@ -10,6 +10,7 @@ import ru.netology.money_transfer_service.models.transactions.TransactionData;
 public class MoneyTransferService {
     private final TransactionHandlerService transactionHandlerService;
     private final MessageService messageService;
+    private static final Logger LOGGER = Logger.getLogger();
 
     public MoneyTransferService(TransactionHandlerService transactionHandlerService, MessageService messageService) {
         this.transactionHandlerService = transactionHandlerService;
@@ -18,7 +19,7 @@ public class MoneyTransferService {
 
     public OperationId processTransaction(TransactionData transactionData) {
         final var transaction = transactionHandlerService.handleTransaction(transactionData);
-        Logger.getLogger().log(transaction.toString(), true);
+        LOGGER.log(transaction.toString(), true);
         messageService.sendMessage(transaction);
         return new OperationId(transaction.getTransactionId());
     }

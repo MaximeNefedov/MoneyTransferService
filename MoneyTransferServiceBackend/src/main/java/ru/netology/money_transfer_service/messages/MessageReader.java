@@ -9,6 +9,7 @@ import java.io.IOException;
 public class MessageReader {
     private final String pattern = ".txt";
     private final MessageSession lock;
+    private static final Logger LOGGER = Logger.getLogger();
 
     public MessageReader(MessageSession lock) {
         this.lock = lock;
@@ -26,13 +27,13 @@ public class MessageReader {
             synchronized (lock.getReadLock()) {
                 try (final var in = new BufferedInputStream(new FileInputStream(phoneNumber + pattern))) {
                     code = new String(in.readAllBytes());
-                    Logger.getLogger().log("Прочитан код " + code + " из СМС - уведомления", true);
+                    LOGGER.log("Прочитан код " + code + " из СМС - уведомления", true);
                     lock.getReadLock().notify();
                 }
             }
         } catch (IOException e) {
             final var message = "Ошибка доступа к файлу: " + phoneNumber + pattern;
-            Logger.getLogger().log(message, true);
+            LOGGER.log(message, true);
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
