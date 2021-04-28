@@ -43,7 +43,7 @@ public class DefaultTransactionHandler implements TransactionHandler {
         final var cardFromCVV = transactionData.getCardFromCVV() ;
         final var cardFromValidTill = transactionData.getCardFromValidTill();
 
-        if (!checkCardData(cardFromRepository, cardFromCVV, cardFromValidTill.toString())) {
+        if (!checkCardData(cardFromRepository, cardFromCVV, cardFromValidTill)) {
             final var message = "Введены неверные данные карты";
             LOGGER.log(message, true);
             throw new IncorrectSenderCardData(message);
